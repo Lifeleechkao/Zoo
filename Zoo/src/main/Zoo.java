@@ -16,24 +16,41 @@ import animals.StripedHyena;
 import animals.Tiger;
 import biome.Lake;
 import biome.Plain;
+import data.Datacollecter;
 import interfaces.Plains;
 import interfaces.SpecificAction;
 import interfaces.Swimmable;
+import swing.ZooInterface;
 
 public class Zoo {
+	private static ZooInterface containment = new ZooInterface("Contain These ANIMALS!");
+	private static Datacollecter data = new Datacollecter();
 	private static HashMap<String,AllAnimals> Allanimals = new HashMap<String, AllAnimals>(); 
-	private ArrayList<AllAnimals> animals = new ArrayList<AllAnimals>();
+	private static ArrayList<AllAnimals> Animals = new ArrayList<AllAnimals>();
+	public static HashMap<String, AllAnimals> containedAnimals = new HashMap<String, AllAnimals>();
 	private static String action;
+	private static String name;
 	public static void main(String[] args){
 		run();
 	}
+//	public static <HaspMap> HaspMap AddTHeAnimals(ArrayList containment){
+//		if(containedAnimals == null){
+//			return null;
+//		}
+//		return containedAnimals.put(name, containment.get(0));
+//	}
+	public void containThem(){
+		System.out.println(Allanimals.keySet() + " These have been contained");
+		data.writeData(String.valueOf(containedAnimals.keySet()));
+		System.out.println(data.readData() + " These also have been Contained");
+	}
 	public void addAnimals (AllAnimals a){
-		animals.add(a);
+		Animals.add(a);
 	}
 	public void enterZoo(){
 		Lake l = new Lake();
 		Plain p = new Plain();
-	for(AllAnimals a: animals){
+	for(AllAnimals a: Animals){
 		System.out.println(a.getGreeting());
 		if(a instanceof Swimmable){
 			Swimmable s =  (Swimmable)a;
@@ -72,6 +89,7 @@ public class Zoo {
 		z.addAnimals(t);
 		z.addAnimals(ts);
 		z.enterZoo();
+		System.out.println(Animals);
 		if(Allanimals.containsKey("HyenaS")){
 			System.out.println("Hey HEY why you putting me in that cage");
 		}
@@ -79,7 +97,14 @@ public class Zoo {
 			System.out.println("NOOOOOO me no like the cage");
 			System.out.println(Allanimals.get("HyenaS"));
 		}
-		System.out.println(Allanimals.keySet() + " These have been contained");
+		System.out.println(containedAnimals);
+	}
+	
+	public ArrayList<AllAnimals> getAnimals() {
+		return Animals;
+	}
+	public static void setAnimals(ArrayList<AllAnimals> animals) {
+		Animals = animals;
 	}
 	
 }
